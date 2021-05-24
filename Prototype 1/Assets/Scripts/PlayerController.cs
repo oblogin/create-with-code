@@ -5,27 +5,18 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5.0f;
-
-    // Awake вызывается во время загрузки экземпляра сценария.
-    private void Awake()
-    {
-    }
-
-    // Start вызывается перед обновлением первого кадра
-    void Start()
-    {
-    }
-
-    // Update вызывается один раз за кадр
-    void Update()
-    {
-        transform.Translate(Vector3.forward * Time.deltaTime * speed);
-    }
+    private float speed = 5.0f;
+    private float turnSpeed = 25.0f;
+    private float horizontalInput;
+    private float forwardInput;
 
     // Независимое от частоты кадров сообщение для расчетов физики.
     private void FixedUpdate()
     {
-        // transform.Translate(Vector3.forward * Time.fixedDeltaTime * Time.timeScale * 20);
+        horizontalInput = Input.GetAxis("Horizontal");
+        forwardInput = Input.GetAxis("Vertical");
+        
+        transform.Translate(Vector3.forward * (forwardInput * Time.fixedDeltaTime * Time.timeScale * speed));
+        transform.Rotate(Vector3.up, horizontalInput * turnSpeed * Time.fixedDeltaTime * Time.timeScale);
     }
 }
